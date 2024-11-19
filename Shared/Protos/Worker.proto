@@ -1,0 +1,46 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Shared";
+
+package worker;
+
+service WorkerIntegration {
+	rpc FillWorkerStream (stream WorkerMessage) returns (EmptyMessage);
+	rpc GetWorkerStream (EmptyMessage) returns (stream WorkerMessage);
+	rpc ChangeWorker (WorkerAction) returns (WorkerAction);
+}
+
+message EmptyMessage
+{
+}
+
+message WorkerAction
+{
+	WorkerMessage worker = 1;
+	Action actionType = 2;
+}
+
+message WorkerMessage
+{
+	int64 ID = 1;
+	string LastName = 2;
+	string FirstName = 3;
+	string MiddleName = 4;
+	int64 Birthday = 5;
+	Sex Sex = 6;
+	bool HaveChildren = 7;
+}
+
+//Пол
+enum Sex {
+	DefaultSex = 0;
+	Male = 1;
+	Female = 2;
+}
+
+enum Action {
+	DefaultAction = 0;
+	Create = 1;
+	Update = 2;
+	Delete = 3;
+}
