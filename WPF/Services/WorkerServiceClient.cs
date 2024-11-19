@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Shared.Mapping;
-using Shared;
-using Shared.Entities;
 using System.Net.Http;
 using Grpc.Net.Client.Web;
+using Shared.Entities;
+using Shared;
+using Shared.Mapping;
 
 namespace WPF.Services
 {
     public static class WorkerServiceClient
     {
-        private const string _server = "https://localhost:44301/";
+        private const string _server = "https://localhost:7028";
 
         public async static Task<IEnumerable<Worker>> GetWorkers()
         {

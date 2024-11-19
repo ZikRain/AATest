@@ -2,12 +2,27 @@
 
 option csharp_namespace = "Shared";
 
+import "google/api/annotations.proto";
+
 package worker;
 
 service WorkerIntegration {
-	rpc FillWorkerStream (stream WorkerMessage) returns (EmptyMessage);
-	rpc GetWorkerStream (EmptyMessage) returns (stream WorkerMessage);
-	rpc ChangeWorker (WorkerAction) returns (WorkerAction);
+	rpc FillWorkerStream (stream WorkerMessage) returns (EmptyMessage){
+		option (google.api.http) = {
+		   post: "/v1/FillWorkerStream"
+		   body: "*"
+		 };
+	};
+	rpc GetWorkerStream (EmptyMessage) returns (stream WorkerMessage){
+		option (google.api.http) = {
+		   get: "/v1/GetWorkerStream:get"
+		 };
+	};
+	rpc ChangeWorker (WorkerAction) returns (WorkerAction){
+		option (google.api.http) = {
+		   get: "/v1/ChangeWorker:get"
+		 };
+	};
 }
 
 message EmptyMessage
