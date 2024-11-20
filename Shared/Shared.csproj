@@ -14,8 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="C:\Users\danii\_work\AATest\apis\google\**\*.proto" GrpcServices="None" AdditionalImportDirs="C:\Users\danii\_work\AATest\apis"></Protobuf>
-    <Protobuf Include="Protos\Worker.proto" GrpcServices="Both" AdditionalImportDirs="C:\Users\danii\_work\AATest\apis"></Protobuf>
+    <None Remove="apis\google\api\annotations.proto" />
+    <None Remove="apis\google\api\http.proto" />
+    <Protobuf Include="apis\google\api\annotations.proto" />
+    <Protobuf Include="apis\google\api\http.proto" />
+    <Protobuf Include="Protos\Worker.proto" GrpcServices="Both"></Protobuf>
   </ItemGroup>
 
 </Project>

@@ -17,18 +17,19 @@ namespace GRPC.Services
 
         }
 
-        public async override Task GetWorkerStream(EmptyMessage request, IServerStreamWriter<WorkerMessage> responseStream, ServerCallContext context)
+        public async override Task<WorkerList> GetWorkersList(EmptyMessage request, ServerCallContext context)
         {
             try
             {
                 _logger.LogInformation("START: GetWorkerStream");
                 var workers = await _rep.GetAllAsync();
+                
+                var response = new WorkerList();
+                
+                if(workers.Any()) response.Workers.AddRange(workers.Select(x => x.ToMessage()));
 
-                foreach (var worker in workers)
-                {
-                    await responseStream.WriteAsync(worker.ToMessage());
-                }
-            
+                return response;
+                
             }catch(RpcException ex)
             {
                 _logger.LogError($"ERROR: GetWorkerStream; Code:{ex.StatusCode}; Message:{ex.Message}");

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.Services;
+using WPF.ViewModels;
 namespace WPF
 {
     /// <summary>
@@ -25,16 +26,14 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
-
-            try
-            {
-
-                var a = WorkerServiceClient.GetWorkers().Result;
-                var b = 0;
-            }catch(Exception ex)
-            {
-                throw ex;
-            }
+            
+            GetData();
         }
+
+        private async void GetData()
+        {
+            DataContext = new MainWindowViewModel(await WorkerServiceClient.GetWorkers());
+        }
+
     }
 }

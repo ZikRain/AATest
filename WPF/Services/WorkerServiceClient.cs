@@ -7,12 +7,13 @@ using Grpc.Net.Client.Web;
 using Shared.Entities;
 using Shared;
 using Shared.Mapping;
+using System.Linq;
 
 namespace WPF.Services
 {
     public static class WorkerServiceClient
     {
-        private const string _server = "https://localhost:7028";
+        private const string _server = "https://localhost:44301";
 
         public async static Task<IEnumerable<Worker>> GetWorkers()
         {
@@ -23,15 +24,9 @@ namespace WPF.Services
             {
 
                 var client = new WorkerIntegration.WorkerIntegrationClient(channel);
-                var serverData = client.GetWorkerStream(new EmptyMessage());
-                var responseStream = serverData.ResponseStream;
+                var response = client.GetWorkersList(new EmptyMessage());
 
-                var workers = new List<Worker>();
-
-                while (await responseStream.MoveNext(new CancellationToken()))
-                {
-                    workers.Add(responseStream.Current.ToEntity());
-                }
+                var workers = new List<Worker>(response.Workers.Select(x=>x.ToEntity()));
 
                 return workers;
             }

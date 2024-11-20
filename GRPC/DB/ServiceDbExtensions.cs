@@ -18,6 +18,7 @@ namespace GRPC.DB
             });
 
             options.EnableSensitiveDataLogging();
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             return options.Options;
         }
     }

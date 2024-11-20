@@ -34,6 +34,7 @@ namespace GRPC.DB.Repositories
                 if(string.IsNullOrWhiteSpace(worker.FirstName)) throw new Exception($"Имя не должно быть пустым");
                 if(string.IsNullOrWhiteSpace(worker.LastName)) throw new Exception($"Фамилия не должна быть пустой");
                 if(string.IsNullOrWhiteSpace(worker.MiddleName)) throw new Exception($"Отчество не должно быть пустым");
+                worker.ID = 0;
 
 
                 var a = await _testDbContext.Workers.AddAsync(worker);

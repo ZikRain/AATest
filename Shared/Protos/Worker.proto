@@ -2,7 +2,7 @@
 
 option csharp_namespace = "Shared";
 
-import "google/api/annotations.proto";
+import "apis/google/api/annotations.proto";
 
 package worker;
 
@@ -13,14 +13,15 @@ service WorkerIntegration {
 		   body: "*"
 		 };
 	};
-	rpc GetWorkerStream (EmptyMessage) returns (stream WorkerMessage){
+	rpc GetWorkersList (EmptyMessage) returns (WorkerList){
 		option (google.api.http) = {
-		   get: "/v1/GetWorkerStream:get"
+		   get: "/v1/GetWorkerStream"
 		 };
 	};
 	rpc ChangeWorker (WorkerAction) returns (WorkerAction){
 		option (google.api.http) = {
-		   get: "/v1/ChangeWorker:get"
+		   post: "/v1/ChangeWorker"
+		   body: "*"
 		 };
 	};
 }
@@ -44,6 +45,11 @@ message WorkerMessage
 	int64 Birthday = 5;
 	Sex Sex = 6;
 	bool HaveChildren = 7;
+}
+
+message WorkerList
+{
+	repeated WorkerMessage Workers = 1;
 }
 
 //Пол
